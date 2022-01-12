@@ -16,17 +16,18 @@ const ErrorText = () => {
 };
 
 const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
-  const [startTimeValue, setStartTimeValue] = useState("");
+  const [shiftName, setShiftName] = useState("");
+  const [shiftPerson, setShiftPerson] = useState<string>("");
+
+  const [startTimeValue, setStartTimeValue] = useState("09:00");
   const startTimeHandleChange = (e: any) => {
     setStartTimeValue(e.target.value);
   };
-  console.log("start time:", startTimeValue);
 
-  const [endTimeValue, setEndTimeValue] = useState("");
+  const [endTimeValue, setEndTimeValue] = useState("12:00");
   const endTimeHandleChange = (e: any) => {
     setEndTimeValue(e.target.value);
   };
-  console.log("end time:", endTimeValue);
 
   const [fullNameUsers, setFullNameUsers] = useState<string[]>([]);
   const { stateUsers, setStateUsers } = useContext(UsersContext);
@@ -42,23 +43,22 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
     getUsers();
   }, []);
 
-  const [shiftName, setShiftName] = useState("");
-  const [_id, setId] = useState("");
-  const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
   const CreateShift = useCallback(() => {
     const sendrequest = async () => {
       try {
-        const response = await axios.post("http://localhost:5000/api/users", {
+        const response = await axios.post("http://localhost:5000/shifts", {
+          dateProp,
           shiftName,
-          _id,
-          password,
+          shiftPerson,
+          startTimeValue,
+          endTimeValue,
         });
 
         if (response.status >= 200 && response.status <= 399) {
-          navigate(`/login`);
+          //   console.log("got here");
         } else if (response.status > 399) {
           setIsError(true);
         }
@@ -68,9 +68,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
     };
 
     sendrequest();
-  }, [shiftName, _id, password]);
-
-  console.log();
+  }, [dateProp, shiftName, shiftPerson, startTimeValue, endTimeValue]);
 
   return (
     <div className={classes.root}>
@@ -96,11 +94,11 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <label>שם התורנות</label>
             <TextField
               type="text"
-              name="PersonalNumber"
-              value={_id}
+              name="shiftName"
+              value={shiftName}
               autoComplete="off"
               onChange={(e) => {
-                setId(e.currentTarget.value);
+                setShiftName(e.currentTarget.value);
               }}
               className={classes.inputStyle}
             ></TextField>
@@ -110,6 +108,9 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
               id="combo-box-demo"
               options={fullNameUsers}
               className={classes.inputStyle}
+              onChange={(event, value) =>
+                value ? setShiftPerson(value) : setShiftPerson("")
+              }
               renderInput={(params) => <TextField {...params} />}
             />
             <label>שעת התחלה</label>
