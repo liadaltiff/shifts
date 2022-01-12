@@ -32,8 +32,8 @@ const LoginPage: FC = () => {
 
       if (response.statusText === "OK") {
         const res = await axios.get(`http://localhost:5000/users`);
-        setStateUsers(res.data.users);
-        setLoggedInUser(response.data.user);
+        setStateUsers(res.data);
+        setLoggedInUser(response.data);
       }
     } catch (error) {
       setIsError(true);
