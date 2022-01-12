@@ -1,0 +1,27 @@
+@use "react-nice-dates/src/style.scss" as c;
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+}
+
+.dateCalendar {
+  // direction: ltr;
+  margin-top: 2rem;
+  margin-right: 3rem;
+  width: 100%;
+  font-size: c.$nice-dates-font-size-big;
+}
+
+.shift {
+  display: flex;
+  justify-content: end;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
