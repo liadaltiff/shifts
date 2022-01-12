@@ -8,9 +8,12 @@ import "react-nice-dates/build/style.css";
 import Header from "../../components/Header/Header";
 import MakeShift from "../../components/MakeShift/MakeShift";
 import ViewShift from "../../components/ViewShift/ViewShift";
+import { Shift } from "../../types/shift.interface";
 
 const HomePage = () => {
   const [date, setDate] = useState<Date>();
+  const [shiftsDate, setShiftsDate] = useState<Shift>();
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const inputProps = useDateInput({
     date,
