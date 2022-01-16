@@ -96,7 +96,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     bigFont: "-bigFont",
   };
 
-  const x = (date: Date | undefined) => {
+  const CombineTwoFuncs = (date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
       GetAllShiftProps(date);
@@ -108,7 +108,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
       <div className={classes.dateCalendar}>
         <DatePickerCalendar
           date={date}
-          onDateChange={(e) => x(e)}
+          onDateChange={(e) => CombineTwoFuncs(e)}
           locale={he}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
