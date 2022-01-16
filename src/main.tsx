@@ -6,17 +6,20 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import { UsersProvider } from "./contexts/UsersContext";
 import { ShiftProvider } from "./contexts/ShiftContext";
+import { ShiftsProvider } from "./contexts/ShiftsContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <UsersProvider>
-        <UserProvider>
+      <UserProvider>
+        <UsersProvider>
           <ShiftProvider>
-            <App />
+            <ShiftsProvider>
+              <App />
+            </ShiftsProvider>
           </ShiftProvider>
-        </UserProvider>
-      </UsersProvider>
+        </UsersProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import HomePage from "./pages/HomePage/HomePage";
 import { UserContext } from "./contexts/UserContext";
 import { getUser } from "./api/users";
+import TradeShifts from "./pages/TradeShifts/TradeShifts";
 
 export default function App() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
@@ -27,6 +28,7 @@ export default function App() {
       {loggedInUser ? (
         <Routes>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/trade" element={<TradeShifts />} />
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       ) : (

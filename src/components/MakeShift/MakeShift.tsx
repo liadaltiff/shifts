@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
 interface dateProps {
-  dateProp: string;
+  dateProp: Date | undefined;
 }
 
 const ErrorText = () => {
@@ -46,8 +46,8 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  const CreateShift = useCallback(() => {
-    const sendrequest = async () => {
+  const createShift = useCallback(() => {
+    const sendRequest = async () => {
       try {
         const response = await axios.post("http://localhost:5000/shifts", {
           dateProp,
@@ -67,7 +67,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
       }
     };
 
-    sendrequest();
+    sendRequest();
   }, [dateProp, shiftName, shiftPerson, startTimeValue, endTimeValue]);
 
   return (
@@ -81,7 +81,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <TextField
               type="text"
               name="date"
-              value={dateProp}
+              value={dateProp?.toLocaleDateString("he-IL")}
               autoComplete="off"
               className={classes.inputStyle}
               disabled
@@ -154,7 +154,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <div className={classes.buttonContainer}>
               <button
                 type="button"
-                onClick={CreateShift}
+                onClick={createShift}
                 className={classes.createShift}
               >
                 צור תורנות

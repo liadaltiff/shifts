@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./view-shift.module.scss";
 
 interface dateProps {
-  dateProp: string;
+  dateProp: Date | undefined;
 }
 
 const ErrorText = () => {
@@ -51,7 +51,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="date"
-              value={dateProp}
+              value={dateProp?.toLocaleDateString("he-IL")}
               autoComplete="off"
               className={classes.shiftDateInput}
               readOnly

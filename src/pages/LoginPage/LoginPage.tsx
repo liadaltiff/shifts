@@ -4,6 +4,8 @@ import classes from "./login-page.module.scss";
 import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 import { UsersContext } from "../../contexts/UsersContext";
+import { ShiftsContext, ShiftsProvider } from "../../contexts/ShiftsContext";
+import { Shift } from "../../types/shift.interface";
 
 const ErrorText = () => {
   return (
@@ -15,6 +17,8 @@ const LoginPage: FC = () => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const { stateUsers, setStateUsers } = useContext(UsersContext);
 
+  const { stateShifts, setStateShifts } = useContext(ShiftsContext);
+
   const { state } = useLocation();
 
   const [_id, setId] = useState("");
@@ -23,7 +27,8 @@ const LoginPage: FC = () => {
 
   const navigate = useNavigate();
 
-  const Login = async (_id: string, password: string) => {
+  const Login = async (event: any) => {
+    event.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/users/login", {
         _id,
@@ -34,11 +39,28 @@ const LoginPage: FC = () => {
         const res = await axios.get(`http://localhost:5000/users`);
         setStateUsers(res.data);
         setLoggedInUser(response.data);
+
+        const resShifts = await axios.get(`http://localhost:5000/shifts`);
+        setStateShifts(resShifts.data);
       }
     } catch (error) {
       setIsError(true);
     }
   };
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   async function run() {
+  //     return await stateShifts.map((shift) => {
+  //       return { ...shift, dateProp: new Date(shift.dateProp) };
+  //     });
+  //   }
+  //   run().then((data) => {
+  //     if (isMounted) setStateShifts(data);
+  //   });
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [stateShifts]);
 
   useEffect(() => {
     if (loggedInUser) {
@@ -50,7 +72,7 @@ const LoginPage: FC = () => {
     <div className={classes.root}>
       <div className={classes.card}>
         <h1 className={classes.loginText}>התחברות</h1>
-        <form>
+        <form onSubmit={Login}>
           <div className={classes.inputContainer}>
             <label>מספר אישי</label>
             <input
@@ -75,11 +97,7 @@ const LoginPage: FC = () => {
               className={classes.passwordInput}
             ></input>
 
-            <button
-              type="button"
-              onClick={() => Login(_id, password)}
-              className={classes.loginButton}
-            >
+            <button type="submit" className={classes.loginButton}>
               התחבר
             </button>
           </div>

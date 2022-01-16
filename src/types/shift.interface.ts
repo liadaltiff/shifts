@@ -1,8 +1,9 @@
 export interface Shift {
   _id: string;
-  shiftDate: string;
+  dateProp: Date;
+  // date: Date;
   shiftName: string;
   shiftPerson: string;
-  shiftStartTime: string;
-  shiftEndTime: string;
+  startTimeValue: string;
+  endTimeValue: string;
 }

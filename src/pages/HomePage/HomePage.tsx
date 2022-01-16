@@ -1,33 +1,24 @@
 import classes from "./home-page.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { format } from "date-fns";
-import { enGB, he } from "date-fns/locale";
-import { DatePickerCalendar, useDateInput } from "react-nice-dates";
 import "react-nice-dates/build/style.css";
 import Header from "../../components/Header/Header";
-import MakeShift from "../../components/MakeShift/MakeShift";
+import DatesCalendar from "../../components/DatesCalendar/DatesCalendar";
+import "react-nice-dates/build/style.css";
 import ViewShift from "../../components/ViewShift/ViewShift";
-import { Shift } from "../../types/shift.interface";
+import MakeShift from "../../components/MakeShift/MakeShift";
 
-const HomePage = () => {
-  const [date, setDate] = useState<Date>();
-  const [shiftsDate, setShiftsDate] = useState<Shift>();
-  const [selectedDates, setSelectedDates] = useState([]);
-
-  const inputProps = useDateInput({
-    date,
-    format: "dd-MM-yyyy",
-    locale: he,
-    onDateChange: setDate,
-  });
-
+const HomePage: React.FC = () => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const [date, setDate] = useState<Date>();
+
   if (loggedInUser) {
     setLoggedInUser(loggedInUser);
   }
 
-  console.log("dateinput:", inputProps.value);
+  useEffect(() => {
+    console.log(date?.getMonth());
+  }, [date]);
 
   return (
     <div>
@@ -36,19 +27,15 @@ const HomePage = () => {
           <Header />
         </div>
       </div>
+
       <div className={classes.grid}>
-        <div className={classes.dateCalendar}>
-          <DatePickerCalendar date={date} onDateChange={setDate} locale={he} />
-        </div>
+        <DatesCalendar setSelectedDate={setDate} date={date} />
         {loggedInUser && (
           <div className={classes.shift}>
-            {loggedInUser.role === "Soldier" && (
-              <ViewShift dateProp={inputProps.value || ""} />
-            )}
-            {loggedInUser.role === "Officer" && (
-              <MakeShift dateProp={inputProps.value || ""} />
-            )}
+            {loggedInUser.role === "Soldier" && <ViewShift dateProp={date} />}
+            {loggedInUser.role === "Officer" && <MakeShift dateProp={date} />}
           </div>
+          //dateProp={inputProps.value || ""}
         )}
       </div>
     </div>
