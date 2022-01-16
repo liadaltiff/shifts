@@ -1,6 +1,7 @@
 import axios from "axios";
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ShiftContext } from "../../contexts/ShiftContext";
 import classes from "./view-shift.module.scss";
 
 interface dateProps {
@@ -12,6 +13,9 @@ const ErrorText = () => {
 };
 
 const ViewShift: FC<dateProps> = ({ dateProp }) => {
+  const { stateShift, setStateShift } = useContext(ShiftContext);
+  setStateShift(stateShift);
+
   // BADDDDDD
   const [fullName, setFullName] = useState("");
   const [_id, setId] = useState("");
@@ -54,7 +58,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
               name="date"
               value={dateProp?.toLocaleDateString("he-IL")}
               autoComplete="off"
-              className={classes.shiftDateInput}
+              className={classes.shiftInput}
               readOnly
             ></input>
 
@@ -62,27 +66,30 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="shiftName"
-              value={_id}
+              value={stateShift?.shiftName}
               autoComplete="off"
-              className={classes.shiftNameInput}
+              className={classes.shiftInput}
+              readOnly
             ></input>
 
             <label>שעת התחלה</label>
             <input
               type="text"
-              name="Password"
-              value={password}
+              name="shiftStartTime"
+              value={stateShift?.startTimeValue}
               autoComplete="off"
-              className={classes.shiftStartTimeInput}
+              className={classes.shiftInput}
+              readOnly
             ></input>
 
             <label>שעת סיום</label>
             <input
               type="text"
-              name="Password"
-              value={password}
+              name="shiftEndTime"
+              value={stateShift?.endTimeValue}
               autoComplete="off"
-              className={classes.shiftEndTimeInput}
+              className={classes.shiftInput}
+              readOnly
             ></input>
 
             <div className={classes.buttonContainer}>
