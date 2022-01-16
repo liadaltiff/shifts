@@ -28,7 +28,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const GoToTradesPage = () => {
-    setLoggedInUser(undefined);
+    setLoggedInUser(loggedInUser);
     navigate("/trade");
   };
 
