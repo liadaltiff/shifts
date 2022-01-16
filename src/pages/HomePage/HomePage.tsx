@@ -7,7 +7,6 @@ import DatesCalendar from "../../components/DatesCalendar/DatesCalendar";
 import "react-nice-dates/build/style.css";
 import ViewShift from "../../components/ViewShift/ViewShift";
 import MakeShift from "../../components/MakeShift/MakeShift";
-import { ShiftContext } from "../../contexts/ShiftContext";
 
 const HomePage: React.FC = () => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
