@@ -73,7 +73,13 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
       `http://localhost:5000/shifts/date/${date.toISOString()}`
     );
 
-    setStateShift(resSelectedShift.data[0]);
+    if (resSelectedShift.data.length === 0) {
+      setStateShift(undefined);
+    }
+
+    if (resSelectedShift.data.length !== 0) {
+      setStateShift(resSelectedShift.data[0]);
+    }
 
     if (stateShift !== undefined) {
       console.log("the selected shift name is:", stateShift.shiftName);

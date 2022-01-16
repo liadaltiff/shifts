@@ -6,6 +6,7 @@ import { User } from "../../types/user.interface";
 import classes from "./make-shift.module.scss";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { ShiftContext } from "../../contexts/ShiftContext";
 
 interface dateProps {
   dateProp: Date | undefined;
@@ -16,7 +17,10 @@ const ErrorText = () => {
 };
 
 const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
-  const [shiftName, setShiftName] = useState("");
+  const { stateShift, setStateShift } = useContext(ShiftContext);
+  setStateShift(stateShift);
+
+  const [shiftName, setShiftName] = useState(stateShift?.shiftName);
   const [shiftPerson, setShiftPerson] = useState<string>("");
 
   const [startTimeValue, setStartTimeValue] = useState("09:00");

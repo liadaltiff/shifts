@@ -66,7 +66,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="shiftName"
-              value={stateShift?.shiftName}
+              value={stateShift?.shiftName || "לא שובצת בתורנות בתאריך זה"}
               autoComplete="off"
               className={classes.shiftInput}
               readOnly
@@ -76,7 +76,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="shiftStartTime"
-              value={stateShift?.startTimeValue}
+              value={stateShift?.startTimeValue || "לא שובצת בתורנות בתאריך זה"}
               autoComplete="off"
               className={classes.shiftInput}
               readOnly
@@ -86,7 +86,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="shiftEndTime"
-              value={stateShift?.endTimeValue}
+              value={stateShift?.endTimeValue || "לא שובצת בתורנות בתאריך זה"}
               autoComplete="off"
               className={classes.shiftInput}
               readOnly
