@@ -39,28 +39,11 @@ const LoginPage: FC = () => {
         const res = await axios.get(`http://localhost:5000/users`);
         setStateUsers(res.data);
         setLoggedInUser(response.data);
-
-        const resShifts = await axios.get(`http://localhost:5000/shifts`);
-        setStateShifts(resShifts.data);
       }
     } catch (error) {
       setIsError(true);
     }
   };
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   async function run() {
-  //     return await stateShifts.map((shift) => {
-  //       return { ...shift, dateProp: new Date(shift.dateProp) };
-  //     });
-  //   }
-  //   run().then((data) => {
-  //     if (isMounted) setStateShifts(data);
-  //   });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, [stateShifts]);
 
   useEffect(() => {
     if (loggedInUser) {

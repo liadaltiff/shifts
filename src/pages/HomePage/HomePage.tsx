@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(date?.getMonth());
+    // console.log(date?.getMonth());
   }, [date]);
 
   return (
@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
       </div>
 
       <div className={classes.grid}>
-        <DatesCalendar setSelectedDate={setDate} date={date} />
+        <DatesCalendar date={date} setSelectedDate={setDate} />
         {loggedInUser && (
           <div className={classes.shift}>
             {loggedInUser.role === "Soldier" && <ViewShift dateProp={date} />}

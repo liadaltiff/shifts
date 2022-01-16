@@ -12,6 +12,7 @@ const ErrorText = () => {
 };
 
 const ViewShift: FC<dateProps> = ({ dateProp }) => {
+  // BADDDDDD
   const [fullName, setFullName] = useState("");
   const [_id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -60,36 +61,27 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <label>שם התורנות</label>
             <input
               type="text"
-              name="PersonalNumber"
+              name="shiftName"
               value={_id}
               autoComplete="off"
-              onChange={(e) => {
-                setId(e.currentTarget.value);
-              }}
               className={classes.shiftNameInput}
             ></input>
 
             <label>שעת התחלה</label>
             <input
-              type="password"
+              type="text"
               name="Password"
               value={password}
               autoComplete="off"
-              onChange={(e) => {
-                setPassword(e.currentTarget.value);
-              }}
               className={classes.shiftStartTimeInput}
             ></input>
 
             <label>שעת סיום</label>
             <input
-              type="password"
+              type="text"
               name="Password"
               value={password}
               autoComplete="off"
-              onChange={(e) => {
-                setPassword(e.currentTarget.value);
-              }}
               className={classes.shiftEndTimeInput}
             ></input>
 
