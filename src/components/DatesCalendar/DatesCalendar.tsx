@@ -1,5 +1,5 @@
 import classes from "./dates-calendar.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { he } from "date-fns/locale";
 // import {fr} from "date-fns"
@@ -8,30 +8,77 @@ import { ShiftsContext } from "../../contexts/ShiftsContext";
 import "react-nice-dates/build/style.css";
 import "react-nice-dates/build/style.css";
 import "./style.css";
+import axios from "axios";
+import { ShiftContext } from "../../contexts/ShiftContext";
 
 interface DatesCalendarProps {
   date: Date | undefined;
   setSelectedDate: (date: Date | undefined) => void;
 }
+
+const ErrorText = () => {
+  return <></>;
+};
+
 const DatesCalendar: React.FC<DatesCalendarProps> = ({
   date,
   setSelectedDate,
 }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  if (loggedInUser) {
+    setLoggedInUser(loggedInUser);
+  }
+
+  const fullName = loggedInUser?.fullName;
   const { stateShifts, setStateShifts } = useContext(ShiftsContext);
-  // console.log("stateShifts are:", stateShifts);
+  const { stateShift, setStateShift } = useContext(ShiftContext);
 
-  const datesss: string[] = [];
+  const [isError, setIsError] = useState(false);
 
-  stateShifts.map((Shift) => {
-    const shiftDate = new Date(Shift.dateProp);
-    console.log("check", shiftDate);
-    const x = shiftDate.toLocaleDateString("fr-FR");
-    datesss.push(x);
-    // console.log("shiftDate is", stateShifts);
-    // Shift.dateProp.toLocaleDateString("fr-FR");
-    // console.log("what i need is:", Shift.dateProp.toLocaleDateString("fr-FR"));
-    // console.log("propdate is:", Shift.dateProp);
+  useEffect(() => {
+    const getShifts = async () => {
+      if (loggedInUser) {
+        try {
+          if (loggedInUser.role === "Officer") {
+            const resShifts = await axios.get(`http://localhost:5000/shifts`);
+            setStateShifts(resShifts.data);
+          }
+
+          if (loggedInUser.role === "Soldier") {
+            const resShifts = await axios.get(
+              `http://localhost:5000/shifts/shiftperson/${fullName}`
+            );
+            setStateShifts(resShifts.data);
+          }
+        } catch (error) {
+          setIsError(true);
+        }
+      }
+    };
+
+    getShifts();
+  }, []);
+
+  const shiftDates: string[] = [];
+  // console.log("stateshifts:", stateShifts);
+
+  stateShifts.map((shift) => {
+    const shiftDate = new Date(shift.dateProp);
+    const convertedDate = shiftDate.toLocaleDateString("fr-FR");
+    shiftDates.push(convertedDate);
   });
+
+  const GetAllShiftProps = async (date: Date) => {
+    const resSelectedShift = await axios.get(
+      `http://localhost:5000/shifts/date/${date.toISOString()}`
+    );
+
+    setStateShift(resSelectedShift.data[0]);
+
+    if (stateShift !== undefined) {
+      console.log("the selected shift name is:", stateShift.shiftName);
+    }
+  };
 
   const inputProps = useDateInput({
     date,
@@ -41,7 +88,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
 
   const modifiers = {
     taskDay: (date: Date) =>
-      datesss.some((e: string) => date.toLocaleDateString("fr-FR") == e),
+      shiftDates.some((e: string) => date.toLocaleDateString("fr-FR") == e),
   };
 
   const modifiersClassNames = {
@@ -49,19 +96,19 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     bigFont: "-bigFont",
   };
 
-  // console.log("normal date", date?.toLocaleDateString());
+  const x = (date: Date | undefined) => {
+    setSelectedDate(date);
+    if (date) {
+      GetAllShiftProps(date);
+    }
+  };
 
-  // let tasksDates = [new Date("01/26/2022")];
-  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  if (loggedInUser) {
-    setLoggedInUser(loggedInUser);
-  }
   return (
     <div>
       <div className={classes.dateCalendar}>
         <DatePickerCalendar
           date={date}
-          onDateChange={setSelectedDate}
+          onDateChange={(e) => x(e)}
           locale={he}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
