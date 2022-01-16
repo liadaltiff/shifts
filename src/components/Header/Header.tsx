@@ -27,6 +27,11 @@ const Header = () => {
   setLoggedInUser(loggedInUser);
   const navigate = useNavigate();
 
+  const GoToTradesPage = () => {
+    setLoggedInUser(undefined);
+    navigate("/trade");
+  };
+
   const LogOut = () => {
     setLoggedInUser(undefined);
     navigate("/login");
@@ -59,7 +64,15 @@ const Header = () => {
         }}
       >
         <button
-          className={classes.logOut}
+          className={classes.btnStyle}
+          onClick={() => {
+            GoToTradesPage();
+          }}
+        >
+          תורנויות להצעה
+        </button>
+        <button
+          className={classes.btnStyle}
           onClick={() => {
             LogOut();
           }}

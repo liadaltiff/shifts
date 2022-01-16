@@ -10,8 +10,6 @@ import MakeShift from "../../components/MakeShift/MakeShift";
 import { ShiftContext } from "../../contexts/ShiftContext";
 
 const HomePage: React.FC = () => {
-  // const { stateShift, setStateShift } = useContext(ShiftContext);
-  // setStateShift(stateShift);
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [date, setDate] = useState<Date>();
 
@@ -19,9 +17,7 @@ const HomePage: React.FC = () => {
     setLoggedInUser(loggedInUser);
   }
 
-  useEffect(() => {
-    // console.log(date?.getMonth());
-  }, [date]);
+  useEffect(() => {}, [date]);
 
   return (
     <div>
@@ -38,7 +34,6 @@ const HomePage: React.FC = () => {
             {loggedInUser.role === "Soldier" && <ViewShift dateProp={date} />}
             {loggedInUser.role === "Officer" && <MakeShift dateProp={date} />}
           </div>
-          //dateProp={inputProps.value || ""}
         )}
       </div>
     </div>
