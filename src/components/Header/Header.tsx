@@ -27,6 +27,11 @@ const Header = () => {
   setLoggedInUser(loggedInUser);
   const navigate = useNavigate();
 
+  const GoToHomePage = () => {
+    setLoggedInUser(loggedInUser);
+    navigate("/home");
+  };
+
   const GoToTradesPage = () => {
     setLoggedInUser(loggedInUser);
     navigate("/trade");
@@ -63,6 +68,14 @@ const Header = () => {
           horizontal: "left",
         }}
       >
+        <button
+          className={classes.btnStyle}
+          onClick={() => {
+            GoToHomePage();
+          }}
+        >
+          מסך הבית
+        </button>
         <button
           className={classes.btnStyle}
           onClick={() => {
