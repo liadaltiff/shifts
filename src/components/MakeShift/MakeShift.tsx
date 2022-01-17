@@ -7,72 +7,14 @@ import classes from "./make-shift.module.scss";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { ShiftContext } from "../../contexts/ShiftContext";
+import { useMakeShift } from "./useMakeShift";
 
 interface dateProps {
   dateProp: Date | undefined;
 }
 
-const ErrorText = () => {
-  return <></>;
-};
-
 const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
-  const { stateShift, setStateShift } = useContext(ShiftContext);
-  setStateShift(stateShift);
-
-  const [shiftName, setShiftName] = useState(stateShift?.shiftName);
-  const [shiftPerson, setShiftPerson] = useState<string>("");
-
-  const [startTimeValue, setStartTimeValue] = useState("09:00");
-  const startTimeHandleChange = (e: any) => {
-    setStartTimeValue(e.target.value);
-  };
-
-  const [endTimeValue, setEndTimeValue] = useState("12:00");
-  const endTimeHandleChange = (e: any) => {
-    setEndTimeValue(e.target.value);
-  };
-
-  const [fullNameUsers, setFullNameUsers] = useState<string[]>([]);
-  const { stateUsers, setStateUsers } = useContext(UsersContext);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      setFullNameUsers(
-        stateUsers.map((user) => {
-          return user.fullName;
-        })
-      );
-    };
-    getUsers();
-  }, []);
-
-  const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
-
-  const createShift = useCallback(() => {
-    const sendRequest = async () => {
-      try {
-        const response = await axios.post("http://localhost:5000/shifts", {
-          dateProp,
-          shiftName,
-          shiftPerson,
-          startTimeValue,
-          endTimeValue,
-        });
-
-        if (response.status >= 200 && response.status <= 399) {
-          //   console.log("got here");
-        } else if (response.status > 399) {
-          setIsError(true);
-        }
-      } catch (error) {
-        setIsError(true);
-      }
-    };
-
-    sendRequest();
-  }, [dateProp, shiftName, shiftPerson, startTimeValue, endTimeValue]);
+  const { form } = useMakeShift(dateProp);
 
   return (
     <div className={classes.root}>
@@ -99,30 +41,30 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <TextField
               type="text"
               name="shiftName"
-              value={shiftName}
+              value={form.data.name}
               autoComplete="off"
               onChange={(e) => {
-                setShiftName(e.currentTarget.value);
+                form.setField("name", e.currentTarget.value);
               }}
               className={classes.inputStyle}
             ></TextField>
             <label>בחירת תורן</label>
             <Autocomplete
+              value={form.data.person}
               disablePortal
               id="combo-box-demo"
-              options={fullNameUsers}
+              options={form.users}
               className={classes.inputStyle}
-              onChange={(event, value) =>
-                value ? setShiftPerson(value) : setShiftPerson("")
-              }
+              onChange={(event, value) => form.setField("person", value ?? "")}
               renderInput={(params) => <TextField {...params} />}
             />
             <label>שעת התחלה</label>
             <TextField
-              onChange={startTimeHandleChange}
+              onChange={(e) => form.setTimeField("start", e)}
               className={classes.inputStyle}
               id="time"
               type="time"
+              value={form.data.time.start}
               defaultValue="09:00"
               InputLabelProps={{
                 shrink: true,
@@ -138,10 +80,11 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             />
             <label>שעת סיום</label>
             <TextField
-              onChange={endTimeHandleChange}
+              onChange={(e) => form.setTimeField("end", e)}
               className={classes.inputStyle}
               id="time"
               type="time"
+              value={form.data.time.end}
               defaultValue="12:00"
               InputLabelProps={{
                 shrink: true,
@@ -158,7 +101,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <div className={classes.buttonContainer}>
               <button
                 type="button"
-                onClick={createShift}
+                onClick={form.post}
                 className={classes.createShift}
               >
                 צור תורנות
@@ -166,8 +109,6 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             </div>
           </div>
         </form>
-
-        {isError && <ErrorText />}
       </div>
     </div>
   );

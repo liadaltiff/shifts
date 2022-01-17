@@ -10,6 +10,8 @@ import "react-nice-dates/build/style.css";
 import "./style.css";
 import axios from "axios";
 import { ShiftContext } from "../../contexts/ShiftContext";
+import { Shift } from "../../types/shift.interface";
+import { responseOk } from "../../utils/axios.util";
 
 interface DatesCalendarProps {
   date: Date | undefined;
@@ -68,21 +70,19 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     shiftDates.push(convertedDate);
   });
 
-  const GetAllShiftProps = async (date: Date) => {
-    const resSelectedShift = await axios.get(
-      `http://localhost:5000/shifts/date/${date.toISOString()}`
-    );
+  const getCurrentShift = async (date: Date): Promise<Shift | undefined> => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/shifts/date/${date.toISOString()}`
+      );
 
-    if (resSelectedShift.data.length === 0) {
-      setStateShift(undefined);
-    }
-
-    if (resSelectedShift.data.length !== 0) {
-      setStateShift(resSelectedShift.data[0]);
-    }
-
-    if (stateShift !== undefined) {
-      console.log("the selected shift name is:", stateShift.shiftName);
+      if (responseOk(response)) {
+        return response.data;
+      } else {
+        return undefined;
+      }
+    } catch (e) {
+      return undefined;
     }
   };
 
@@ -95,6 +95,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   const modifiers = {
     taskDay: (date: Date) =>
       shiftDates.some((e: string) => date.toLocaleDateString("fr-FR") == e),
+    bigFont: (date: Date) => true,
   };
 
   const modifiersClassNames = {
@@ -102,10 +103,11 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     bigFont: "-bigFont",
   };
 
-  const CombineTwoFuncs = (date: Date | undefined) => {
+  const handleDateChange = async (date: Date | undefined) => {
     setSelectedDate(date);
     if (date) {
-      GetAllShiftProps(date);
+      const shift = await getCurrentShift(date);
+      setStateShift(shift);
     }
   };
 
@@ -114,7 +116,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
       <div className={classes.dateCalendar}>
         <DatePickerCalendar
           date={date}
-          onDateChange={(e) => CombineTwoFuncs(e)}
+          onDateChange={(e) => handleDateChange(e)}
           locale={he}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}

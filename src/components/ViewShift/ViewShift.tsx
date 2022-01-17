@@ -1,5 +1,6 @@
 import axios from "axios";
-import { FC, useState, useCallback, useContext } from "react";
+import getDate from "date-fns/getDate";
+import { FC, useState, useCallback, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import classes from "./view-shift.module.scss";
@@ -14,36 +15,13 @@ const ErrorText = () => {
 
 const ViewShift: FC<dateProps> = ({ dateProp }) => {
   const { stateShift, setStateShift } = useContext(ShiftContext);
-  setStateShift(stateShift);
 
-  // BADDDDDD
-  const [fullName, setFullName] = useState("");
-  const [_id, setId] = useState("");
-  const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  const CreateShift = useCallback(() => {
-    const sendrequest = async () => {
-      try {
-        const response = await axios.post("http://localhost:5000/api/users", {
-          fullName,
-          _id,
-          password,
-        });
-
-        if (response.status >= 200 && response.status <= 399) {
-          navigate(`/login`);
-        } else if (response.status > 399) {
-          setIsError(true);
-        }
-      } catch (error) {
-        setIsError(true);
-      }
-    };
-
-    sendrequest();
-  }, [fullName, _id, password]);
+  useEffect(() => {
+    setStateShift(undefined);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -95,7 +73,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <div className={classes.buttonContainer}>
               <button
                 type="button"
-                onClick={CreateShift}
+                // onClick={CreateShift}
                 className={classes.createShift}
               >
                 החלף תורנות
