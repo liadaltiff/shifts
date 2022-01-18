@@ -37,18 +37,6 @@ export const useMakeShift = (date: Date | undefined) => {
     });
   };
 
-  // handlePersonChange = (key: "personName", e: any) => {
-  //   setDetails((prev) => {
-  //     return {
-  //       ...prev,
-  //       person: {
-  //         ...prev.person,
-  //         [key]: e.target.value,
-  //       },
-  //     };
-  //   });
-  // };
-
   const handleTimeChange = (key: "start" | "end", e: any) => {
     setDetails((prev) => {
       return {
@@ -101,7 +89,7 @@ export const useMakeShift = (date: Date | undefined) => {
 
       setDetails({
         name: stateShift.shiftName,
-        person: userINeed,
+        person: undefined,
         time: {
           start: stateShift.startTimeValue,
           end: stateShift.endTimeValue,

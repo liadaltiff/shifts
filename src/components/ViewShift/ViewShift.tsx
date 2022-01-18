@@ -3,6 +3,9 @@ import getDate from "date-fns/getDate";
 import { FC, useState, useCallback, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShiftContext } from "../../contexts/ShiftContext";
+import { UserContext } from "../../contexts/UserContext";
+import { Shift } from "../../types/shift.interface";
+import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 
 interface dateProps {
@@ -21,6 +24,34 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
 
   useEffect(() => {
     setStateShift(undefined);
+  }, []);
+
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  if (loggedInUser) {
+    setLoggedInUser(loggedInUser);
+  }
+  const getDate = dateProp?.toISOString();
+  // console.log("the date is", getDate);
+
+  const tradeCurrentShift = useCallback(() => {
+    console.log("got here");
+
+    const sendRequest = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:5000/shifts/date/${getDate}`
+        );
+        console.log("response i need is:", response);
+
+        if (!responseOk(response)) {
+          throw new Error("response error");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    sendRequest();
   }, []);
 
   return (
@@ -73,7 +104,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <div className={classes.buttonContainer}>
               <button
                 type="button"
-                // onClick={CreateShift}
+                onClick={tradeCurrentShift}
                 className={classes.createShift}
               >
                 החלף תורנות

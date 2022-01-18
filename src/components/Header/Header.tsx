@@ -67,10 +67,7 @@ const Header: React.VFC<dateProps> = ({ dateProp }) => {
     navigate("/login");
   };
 
-  console.log("the name I chose is:", shiftPerson);
-  console.log("state blah blah:", stateUsers);
   const userINeed = stateUsers.find((user) => user.fullName === shiftPerson);
-  console.log("userINeed id is:", userINeed?._id);
 
   React.useEffect(() => {
     const userINeed = stateUsers.find((user) => user.fullName === shiftPerson);
@@ -83,7 +80,6 @@ const Header: React.VFC<dateProps> = ({ dateProp }) => {
               `http://localhost:5000/shifts/shiftperson/${userId}`
             );
             setStateShifts(resShifts.data);
-            console.log("stateshifts isssssss:", stateShifts);
           }
 
           if (userINeed === undefined && loggedInUser.role === "Officer") {

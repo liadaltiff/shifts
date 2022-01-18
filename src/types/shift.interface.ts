@@ -6,5 +6,5 @@ export interface Shift {
   shiftPersonId: string;
   startTimeValue: string;
   endTimeValue: string;
-  // isTradable: boolean;
+  isTradable: boolean;
 }
