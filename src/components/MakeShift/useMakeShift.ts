@@ -83,11 +83,18 @@ export const useMakeShift = (date: Date | undefined) => {
 
   useEffect(() => {
     if (stateShift) {
-      console.log("what i need is:", stateShift.shiftPerson);
+      console.log(
+        "what i need is:",
+        stateUsers.find((element) => stateShift._id)
+      );
+
+      const userINeed = stateUsers.find(
+        (user) => user._id === stateShift.shiftPersonId
+      );
 
       setDetails({
         name: stateShift.shiftName,
-        person: undefined,
+        person: userINeed,
         time: {
           start: stateShift.startTimeValue,
           end: stateShift.endTimeValue,

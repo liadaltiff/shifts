@@ -16,6 +16,8 @@ interface dateProps {
 const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
   const { form } = useMakeShift(dateProp);
 
+  console.log("what vainer need is", form.data.person);
+
   return (
     <div className={classes.root}>
       <div className={classes.card}>
@@ -50,11 +52,11 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             ></TextField>
             <label>בחירת תורן</label>
             <Autocomplete
-              value={form.data.person}
+              value={form.data.person?.fullName ?? ""}
               disablePortal
               id="combo-box-demo"
-              options={form.users}
-              getOptionLabel={(option) => option.fullName}
+              options={form.users.map((user) => user.fullName)}
+              getOptionLabel={(option) => option}
               className={classes.inputStyle}
               onChange={(event, value) => {
                 form.setField("person", value ?? "");

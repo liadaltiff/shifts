@@ -8,7 +8,7 @@ import "react-nice-dates/build/style.css";
 import ShiftTradeCard from "../../components/ShiftTradeCard/ShiftTradeCard";
 
 interface dateProps {
-  dateProp: Date;
+  dateProp: Date | undefined;
 }
 
 const TradeShifts = () => {
@@ -22,7 +22,7 @@ const TradeShifts = () => {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Header />
+        <Header dateProp={undefined} />
       </div>
       <div className={classes.cards}>
         <ShiftTradeCard />

@@ -7,8 +7,32 @@ import { UserContext } from "../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, TextField } from "@mui/material";
+import { User } from "../../types/user.interface";
+import { ShiftsContext } from "../../contexts/ShiftsContext";
+import { UsersContext } from "../../contexts/UsersContext";
+import axios from "axios";
 
-const Header = () => {
+interface dateProps {
+  dateProp: Date | undefined;
+}
+
+const Header: React.VFC<dateProps> = ({ dateProp }) => {
+  const { stateShifts, setStateShifts } = React.useContext(ShiftsContext);
+  const [fullNameUsers, setFullNameUsers] = React.useState<string[]>([]);
+  const [shiftPerson, setShiftPerson] = React.useState<string>("");
+  const { stateUsers, setStateUsers } = useContext(UsersContext);
+
+  React.useEffect(() => {
+    const getUsers = async () => {
+      setFullNameUsers(
+        stateUsers.map((user) => {
+          return user.fullName;
+        })
+      );
+    };
+    getUsers();
+  }, []);
+
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -42,6 +66,38 @@ const Header = () => {
     setLoggedInUser(undefined);
     navigate("/login");
   };
+
+  console.log("the name I chose is:", shiftPerson);
+  console.log("state blah blah:", stateUsers);
+  const userINeed = stateUsers.find((user) => user.fullName === shiftPerson);
+  console.log("userINeed id is:", userINeed?._id);
+
+  React.useEffect(() => {
+    const userINeed = stateUsers.find((user) => user.fullName === shiftPerson);
+    const userId = userINeed?._id;
+    const getShifts = async () => {
+      if (loggedInUser) {
+        try {
+          if (userINeed !== undefined) {
+            const resShifts = await axios.get(
+              `http://localhost:5000/shifts/shiftperson/${userId}`
+            );
+            setStateShifts(resShifts.data);
+            console.log("stateshifts isssssss:", stateShifts);
+          }
+
+          if (userINeed === undefined) {
+            const resShifts = await axios.get(`http://localhost:5000/shifts`);
+            setStateShifts(resShifts.data);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    getShifts();
+  }, [shiftPerson]);
 
   return (
     <nav className={classes.navbar}>
@@ -97,20 +153,20 @@ const Header = () => {
         </Popover>
       </div>
 
-      <div className={classes.leftSide}>
-        {/* <Autocomplete
-              value={form.data.person}
-              disablePortal
-              id="combo-box-demo"
-              options={form.users}
-              getOptionLabel={(option) => option.fullName}
-              className={classes.inputStyle}
-              onChange={(event, value) => {
-                form.setField("person", value ?? "");
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            /> */}
-      </div>
+      {loggedInUser?.role === "Officer" && (
+        <div className={classes.leftSide}>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={fullNameUsers}
+            className={classes.inputStyle}
+            onChange={(event, value) =>
+              value ? setShiftPerson(value) : setShiftPerson("")
+            }
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </div>
+      )}
     </nav>
   );
 };
