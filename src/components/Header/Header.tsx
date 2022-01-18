@@ -86,7 +86,7 @@ const Header: React.VFC<dateProps> = ({ dateProp }) => {
             console.log("stateshifts isssssss:", stateShifts);
           }
 
-          if (userINeed === undefined) {
+          if (userINeed === undefined && loggedInUser.role === "Officer") {
             const resShifts = await axios.get(`http://localhost:5000/shifts`);
             setStateShifts(resShifts.data);
           }

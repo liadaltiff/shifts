@@ -26,14 +26,6 @@ const TradeShifts = () => {
       </div>
       <div className={classes.cards}>
         <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
-        <ShiftTradeCard />
       </div>
     </div>
   );
