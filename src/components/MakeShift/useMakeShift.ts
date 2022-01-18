@@ -37,6 +37,18 @@ export const useMakeShift = (date: Date | undefined) => {
     });
   };
 
+  // handlePersonChange = (key: "personName", e: any) => {
+  //   setDetails((prev) => {
+  //     return {
+  //       ...prev,
+  //       person: {
+  //         ...prev.person,
+  //         [key]: e.target.value,
+  //       },
+  //     };
+  //   });
+  // };
+
   const handleTimeChange = (key: "start" | "end", e: any) => {
     setDetails((prev) => {
       return {
@@ -83,11 +95,6 @@ export const useMakeShift = (date: Date | undefined) => {
 
   useEffect(() => {
     if (stateShift) {
-      console.log(
-        "what i need is:",
-        stateUsers.find((element) => stateShift._id)
-      );
-
       const userINeed = stateUsers.find(
         (user) => user._id === stateShift.shiftPersonId
       );

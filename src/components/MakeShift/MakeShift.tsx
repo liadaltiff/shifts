@@ -50,6 +50,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
               }}
               className={classes.inputStyle}
             ></TextField>
+
             <label>בחירת תורן</label>
             <Autocomplete
               value={form.data.person?.fullName ?? ""}
@@ -59,10 +60,11 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
               getOptionLabel={(option) => option}
               className={classes.inputStyle}
               onChange={(event, value) => {
-                form.setField("person", value ?? "");
+                form.setField("User", value ?? "");
               }}
               renderInput={(params) => <TextField {...params} />}
             />
+
             <label>שעת התחלה</label>
             <TextField
               onChange={(e) => form.setTimeField("start", e)}
