@@ -54,8 +54,11 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
               disablePortal
               id="combo-box-demo"
               options={form.users}
+              getOptionLabel={(option) => option.fullName}
               className={classes.inputStyle}
-              onChange={(event, value) => form.setField("person", value ?? "")}
+              onChange={(event, value) => {
+                form.setField("person", value ?? "");
+              }}
               renderInput={(params) => <TextField {...params} />}
             />
             <label>שעת התחלה</label>

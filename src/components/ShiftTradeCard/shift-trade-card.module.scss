@@ -16,7 +16,7 @@
 
 .card {
   width: 16rem;
-  height: 22rem;
+  height: 16rem;
   background-color: #8fb8de;
   border-radius: 1rem;
   display: flex;
@@ -38,29 +38,84 @@
   }
 }
 
-.shiftInput {
+.shiftInputName {
   padding-right: 0.5rem;
-  width: 10rem;
-  height: 1.6rem;
-  background-color: #ecf4ff;
+  width: 14rem;
+  height: 2rem;
+  background-color: transparent;
   border-radius: 0.4rem;
   border-color: transparent;
   outline: none;
-  margin-bottom: 0.4rem;
-  font-size: 1.8rem;
-  text-align: center;
+  margin-bottom: 0.6rem;
+  font-size: 2.2rem;
+  text-align: right;
+  font-weight: bolder;
+}
+
+.shiftInputDate {
+  padding-right: 0.5rem;
+  width: 14rem;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  border-color: transparent;
+  outline: none;
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+}
+
+.shiftInput {
+  padding-right: 0.5rem;
+  width: 14rem;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  border-color: transparent;
+  outline: none;
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.shiftInputHour {
+  padding-right: 0.5rem;
+  width: 5rem;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  border-color: transparent;
+  outline: none;
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+}
+
+.hourCont {
+  display: flex;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  border-color: transparent;
+  outline: none;
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
 }
 
 .createShift {
   background-color: #333333;
   width: 100%;
-  height: 1.8rem;
+  height: 2rem;
   border: none;
   color: #ecf4ff;
   cursor: pointer;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  margin-top: 0.2rem;
+  border-radius: 0.25rem;
+  font-size: 1.6rem;
+  margin-top: 1rem;
   margin-bottom: 0.2rem;
 }
 

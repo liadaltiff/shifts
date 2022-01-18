@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Autocomplete, TextField } from "@mui/material";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -44,55 +45,72 @@ const Header = () => {
 
   return (
     <nav className={classes.navbar}>
-      <button
-        onClick={handleClick}
-        aria-describedby={id}
-        className={classes.buttonStyle}
-      >
-        <div className={classes.userContainer}>
-          <div className={classes.logo}>
-            <FontAwesomeIcon icon={faUser} />
+      <div className={classes.rightSide}>
+        <button
+          onClick={handleClick}
+          aria-describedby={id}
+          className={classes.buttonStyle}
+        >
+          <div className={classes.userContainer}>
+            <div className={classes.logo}>
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            <div className={classes.textContainer}>
+              <h2>{loggedInUser?.fullName}</h2>
+            </div>
           </div>
-          <div className={classes.textContainer}>
-            <h2>{loggedInUser?.fullName}</h2>
-          </div>
-        </div>
-      </button>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <button
-          className={classes.btnStyle}
-          onClick={() => {
-            GoToHomePage();
+        </button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
           }}
         >
-          מסך הבית
-        </button>
-        <button
-          className={classes.btnStyle}
-          onClick={() => {
-            GoToTradesPage();
-          }}
-        >
-          תורנויות להצעה
-        </button>
-        <button
-          className={classes.btnStyle}
-          onClick={() => {
-            LogOut();
-          }}
-        >
-          התנתק
-        </button>
-      </Popover>
+          <button
+            className={classes.btnStyle}
+            onClick={() => {
+              GoToHomePage();
+            }}
+          >
+            מסך הבית
+          </button>
+          <button
+            className={classes.btnStyle}
+            onClick={() => {
+              GoToTradesPage();
+            }}
+          >
+            תורנויות להצעה
+          </button>
+          <button
+            className={classes.btnStyle}
+            onClick={() => {
+              LogOut();
+            }}
+          >
+            התנתק
+          </button>
+        </Popover>
+      </div>
+
+      <div className={classes.leftSide}>
+        {/* <Autocomplete
+              value={form.data.person}
+              disablePortal
+              id="combo-box-demo"
+              options={form.users}
+              getOptionLabel={(option) => option.fullName}
+              className={classes.inputStyle}
+              onChange={(event, value) => {
+                form.setField("person", value ?? "");
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            /> */}
+      </div>
     </nav>
   );
 };

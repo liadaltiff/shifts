@@ -31,7 +31,8 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     setLoggedInUser(loggedInUser);
   }
 
-  const fullName = loggedInUser?.fullName;
+  const userId = loggedInUser?._id;
+
   const { stateShifts, setStateShifts } = useContext(ShiftsContext);
   const { stateShift, setStateShift } = useContext(ShiftContext);
 
@@ -48,7 +49,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
 
           if (loggedInUser.role === "Soldier") {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/shiftperson/${fullName}`
+              `http://localhost:5000/shifts/shiftperson/${userId}`
             );
             setStateShifts(resShifts.data);
           }

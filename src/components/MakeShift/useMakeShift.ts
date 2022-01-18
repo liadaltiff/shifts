@@ -2,14 +2,24 @@ import axios from "axios";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { UsersContext } from "../../contexts/UsersContext";
+import { User } from "../../types/user.interface";
 import { responseOk } from "../../utils/axios.util";
+
+interface ShiftDetails {
+  name: string;
+  person: User | undefined;
+  time: {
+    start: string;
+    end: string;
+  };
+}
 
 export const useMakeShift = (date: Date | undefined) => {
   const { stateShift, setStateShift } = useContext(ShiftContext);
 
-  const defaultDetails = {
+  const defaultDetails: ShiftDetails = {
     name: "",
-    person: "",
+    person: undefined,
     time: {
       start: "",
       end: "",
@@ -18,7 +28,7 @@ export const useMakeShift = (date: Date | undefined) => {
 
   const [details, setDetails] = useState(defaultDetails);
 
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: string, value: any) => {
     setDetails((prev) => {
       return {
         ...prev,
@@ -43,17 +53,14 @@ export const useMakeShift = (date: Date | undefined) => {
     return {
       dateProp: date,
       shiftName: details.name,
-      shiftPerson: details.person,
+      shiftPerson: details.person?.fullName,
+      shiftPersonId: details.person?._id,
       startTimeValue: details.time.start,
       endTimeValue: details.time.end,
     };
   };
 
   const { stateUsers, setStateUsers } = useContext(UsersContext);
-
-  const users = useMemo(() => {
-    return stateUsers.map((user) => user.fullName);
-  }, [stateUsers]);
 
   const createShift = useCallback(() => {
     const sendRequest = async () => {
@@ -76,9 +83,11 @@ export const useMakeShift = (date: Date | undefined) => {
 
   useEffect(() => {
     if (stateShift) {
+      console.log("what i need is:", stateShift.shiftPerson);
+
       setDetails({
         name: stateShift.shiftName,
-        person: stateShift.shiftPerson,
+        person: undefined,
         time: {
           start: stateShift.startTimeValue,
           end: stateShift.endTimeValue,
@@ -100,7 +109,7 @@ export const useMakeShift = (date: Date | undefined) => {
       setField: handleChange,
       setTimeField: handleTimeChange,
       post: createShift,
-      users: users,
+      users: stateUsers,
     },
   };
 };

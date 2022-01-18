@@ -15,26 +15,26 @@ const ShiftTradeCard = () => {
       <div className={classes.card}>
         <form>
           <div className={classes.inputContainer}>
-            <label>תאריך התורנות</label>
             <input
-              type="text"
-              name="date"
-              autoComplete="off"
-              className={classes.shiftInput}
-              readOnly
-            ></input>
-
-            <label>שם התורנות</label>
-            <input
+              value={"תורנות שמירה"}
               type="text"
               name="ShiftName"
               autoComplete="off"
-              className={classes.shiftInput}
+              className={classes.shiftInputName}
               readOnly
             ></input>
 
-            <label>תורן נוכחי</label>
             <input
+              value={"29.1.2022"}
+              type="text"
+              name="date"
+              autoComplete="off"
+              className={classes.shiftInputDate}
+              readOnly
+            ></input>
+
+            <input
+              value={"ליעד אלטיף"}
               type="text"
               name="CurrentPeron"
               autoComplete="off"
@@ -42,23 +42,27 @@ const ShiftTradeCard = () => {
               readOnly
             ></input>
 
-            <label>שעת התחלה</label>
-            <input
-              type="text"
-              name="shiftStartTime"
-              autoComplete="off"
-              className={classes.shiftInput}
-              readOnly
-            ></input>
+            <div className={classes.hourCont}>
+              <input
+                value={"17:30"}
+                type="text"
+                name="shiftEndTime"
+                autoComplete="off"
+                className={classes.shiftInputHour}
+                readOnly
+              ></input>
 
-            <label>שעת סיום</label>
-            <input
-              type="text"
-              name="shiftEndTime"
-              autoComplete="off"
-              className={classes.shiftInput}
-              readOnly
-            ></input>
+              <span>-</span>
+
+              <input
+                value={"9:00"}
+                type="text"
+                name="shiftStartTime"
+                autoComplete="off"
+                className={classes.shiftInputHour}
+                readOnly
+              ></input>
+            </div>
 
             <div className={classes.buttonContainer}>
               <button
