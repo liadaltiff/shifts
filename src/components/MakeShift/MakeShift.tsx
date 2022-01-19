@@ -1,12 +1,8 @@
 import axios from "axios";
-import React, { FC, useState, useCallback, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { UsersContext } from "../../contexts/UsersContext";
-import { User } from "../../types/user.interface";
+import React from "react";
 import classes from "./make-shift.module.scss";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { ShiftContext } from "../../contexts/ShiftContext";
 import { useMakeShift } from "./useMakeShift";
 
 interface shiftDates {
