@@ -1,6 +1,7 @@
 import axios from "axios";
 import { FC, useState, useCallback, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { ShiftsContext } from "../../contexts/ShiftsContext";
 import { UserContext } from "../../contexts/UserContext";
@@ -36,7 +37,12 @@ const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
             shiftPersonId: loggedInUser?._id,
           }
         );
-        console.log("response i need is:", response);
+        Swal.fire({
+          icon: "success",
+          title: "התורנות נלקחה בהצלחה",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
         if (!responseOk(response)) {
           throw new Error("response error");

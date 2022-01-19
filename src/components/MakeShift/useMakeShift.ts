@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { UsersContext } from "../../contexts/UsersContext";
 import { User } from "../../types/user.interface";
 import { responseOk } from "../../utils/axios.util";
+import "sweetalert2/src/sweetalert2.scss";
 
 interface ShiftDetails {
   name: string;
@@ -69,6 +71,13 @@ export const useMakeShift = (date: Date | undefined) => {
           "http://localhost:5000/shifts",
           parseDetails()
         );
+
+        Swal.fire({
+          icon: "success",
+          title: "התורנות נוצרה בהצלחה",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
         if (!responseOk(response)) {
           throw new Error("response error");

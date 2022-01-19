@@ -2,6 +2,7 @@ import axios from "axios";
 import getDate from "date-fns/getDate";
 import { FC, useState, useCallback, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { UserContext } from "../../contexts/UserContext";
 import { Shift } from "../../types/shift.interface";
@@ -42,7 +43,12 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
           `http://localhost:5000/shifts/date/${getDate}/trade`,
           { traded: true }
         );
-        console.log("response i need is:", response);
+        Swal.fire({
+          icon: "success",
+          title: "התורנות נשלחה לעמוד ההחלפות בהצלחה",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
         if (!responseOk(response)) {
           throw new Error("response error");
