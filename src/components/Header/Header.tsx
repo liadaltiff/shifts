@@ -12,11 +12,11 @@ import { ShiftsContext } from "../../contexts/ShiftsContext";
 import { UsersContext } from "../../contexts/UsersContext";
 import axios from "axios";
 
-interface dateProps {
-  dateProp: Date | undefined;
+interface shiftDates {
+  shiftDate: Date | undefined;
 }
 
-const Header: React.VFC<dateProps> = ({ dateProp }) => {
+const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
   const { stateShifts, setStateShifts } = React.useContext(ShiftsContext);
   const [fullNameUsers, setFullNameUsers] = React.useState<string[]>([]);
   const [shiftPerson, setShiftPerson] = React.useState<string>("");

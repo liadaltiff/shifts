@@ -1,10 +1,10 @@
 export interface Shift {
   _id: string;
-  dateProp: Date;
+  shiftDate: Date;
   shiftName: string;
   shiftPerson: string;
   shiftPersonId: string;
   startTimeValue: string;
   endTimeValue: string;
-  isTradable: boolean;
+  traded: boolean;
 }

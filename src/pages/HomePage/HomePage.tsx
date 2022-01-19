@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
     <div>
       <div className={classes.root}>
         <div className={classes.header}>
-          <Header />
+          <Header shiftDate={undefined} />
         </div>
       </div>
 
@@ -30,8 +30,8 @@ const HomePage: React.FC = () => {
         <DatesCalendar date={date} setSelectedDate={setDate} />
         {loggedInUser && (
           <div className={classes.shift}>
-            {loggedInUser.role === "Soldier" && <ViewShift dateProp={date} />}
-            {loggedInUser.role === "Officer" && <MakeShift dateProp={date} />}
+            {loggedInUser.role === "Soldier" && <ViewShift shiftDate={date} />}
+            {loggedInUser.role === "Officer" && <MakeShift shiftDate={date} />}
           </div>
         )}
       </div>

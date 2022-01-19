@@ -9,12 +9,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { useMakeShift } from "./useMakeShift";
 
-interface dateProps {
-  dateProp: Date | undefined;
+interface shiftDates {
+  shiftDate: Date | undefined;
 }
 
-const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
-  const { form } = useMakeShift(dateProp);
+const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
+  const { form } = useMakeShift(shiftDate);
 
   return (
     <div className={classes.root}>
@@ -27,7 +27,7 @@ const MakeShift: React.VFC<dateProps> = ({ dateProp }) => {
             <TextField
               type="text"
               name="date"
-              value={dateProp?.toLocaleDateString("he-IL")}
+              value={shiftDate?.toLocaleDateString("he-IL")}
               autoComplete="off"
               className={classes.inputStyle}
               disabled

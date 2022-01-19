@@ -51,7 +51,7 @@ export const useMakeShift = (date: Date | undefined) => {
 
   const parseDetails = () => {
     return {
-      dateProp: date,
+      shiftDate: date,
       shiftName: details.name,
       shiftPerson: details.person?.fullName,
       shiftPersonId: details.person?._id,

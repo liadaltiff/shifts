@@ -8,15 +8,15 @@ import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 
-interface dateProps {
-  dateProp: Date | undefined;
+interface shiftDates {
+  shiftDate: Date | undefined;
 }
 
 const ErrorText = () => {
   return <></>;
 };
 
-const ViewShift: FC<dateProps> = ({ dateProp }) => {
+const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
   const { stateShift, setStateShift } = useContext(ShiftContext);
 
   const [isError, setIsError] = useState(false);
@@ -30,7 +30,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
   if (loggedInUser) {
     setLoggedInUser(loggedInUser);
   }
-  const getDate = dateProp?.toISOString();
+  const getDate = shiftDate?.toISOString();
   // console.log("the date is", getDate);
 
   const tradeCurrentShift = useCallback(() => {
@@ -39,7 +39,8 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
     const sendRequest = async () => {
       try {
         const response = await axios.patch(
-          `http://localhost:5000/shifts/date/${getDate}`
+          `http://localhost:5000/shifts/date/${getDate}/trade`,
+          { traded: true }
         );
         console.log("response i need is:", response);
 
@@ -52,7 +53,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
     };
 
     sendRequest();
-  }, []);
+  }, [getDate]);
 
   return (
     <div className={classes.root}>
@@ -65,7 +66,7 @@ const ViewShift: FC<dateProps> = ({ dateProp }) => {
             <input
               type="text"
               name="date"
-              value={dateProp?.toLocaleDateString("he-IL")}
+              value={shiftDate?.toLocaleDateString("he-IL")}
               autoComplete="off"
               className={classes.shiftInput}
               readOnly

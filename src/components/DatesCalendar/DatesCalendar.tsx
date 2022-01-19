@@ -12,6 +12,7 @@ import axios from "axios";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
+import { ShiftsTradeContext } from "../../contexts/ShiftsTradeContext";
 
 interface DatesCalendarProps {
   date: Date | undefined;
@@ -27,22 +28,28 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   setSelectedDate,
 }) => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+
   if (loggedInUser) {
     setLoggedInUser(loggedInUser);
   }
 
   const userId = loggedInUser?._id;
-
+  const { stateTradeShifts, setStateTradeShifts } =
+    useContext(ShiftsTradeContext);
   const { stateShifts, setStateShifts } = useContext(ShiftsContext);
   const { stateShift, setStateShift } = useContext(ShiftContext);
-
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const getShifts = async () => {
       if (loggedInUser) {
         try {
+          const resShifts = await axios.get(`http://localhost:5000/shifts`);
+          setStateTradeShifts(resShifts.data);
+
           if (loggedInUser.role === "Officer") {
+            console.log("got here");
+
             const resShifts = await axios.get(`http://localhost:5000/shifts`);
             setStateShifts(resShifts.data);
           }
@@ -66,7 +73,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   // console.log("stateshifts:", stateShifts);
 
   stateShifts.map((shift) => {
-    const shiftDate = new Date(shift.dateProp);
+    const shiftDate = new Date(shift.shiftDate);
     const convertedDate = shiftDate.toLocaleDateString("fr-FR");
     shiftDates.push(convertedDate);
   });

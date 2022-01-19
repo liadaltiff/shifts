@@ -1,14 +1,53 @@
 import axios from "axios";
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ShiftContext } from "../../contexts/ShiftContext";
+import { ShiftsContext } from "../../contexts/ShiftsContext";
+import { UserContext } from "../../contexts/UserContext";
+import { Shift } from "../../types/shift.interface";
+import { responseOk } from "../../utils/axios.util";
 import classes from "./shift-trade-card.module.scss";
 
-const ShiftTradeCard = () => {
-  const [fullName, setFullName] = useState("");
-  const [_id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
+interface TradedShiftsProps {
+  shift: Shift;
+}
+
+const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  if (loggedInUser) {
+    setLoggedInUser(loggedInUser);
+  }
+  const { stateShifts, setStateShifts } = useContext(ShiftsContext);
+  const { stateShift, setStateShift } = useContext(ShiftContext);
+  const [tradedShifts, setTradedShifts] = useState<Shift[]>([]);
+
+  const date = new Date(shift.shiftDate).toLocaleDateString("he-IL");
+
+  const getTradedShift = useCallback(() => {
+    console.log("got here");
+
+    const sendRequest = async () => {
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/shifts/date/${shift.shiftDate}/traded`,
+          {
+            traded: false,
+            shiftPerson: loggedInUser?.fullName,
+            shiftPersonId: loggedInUser?._id,
+          }
+        );
+        console.log("response i need is:", response);
+
+        if (!responseOk(response)) {
+          throw new Error("response error");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    sendRequest();
+  }, [shift.shiftDate]);
 
   return (
     <div className={classes.root}>
@@ -16,7 +55,7 @@ const ShiftTradeCard = () => {
         <form>
           <div className={classes.inputContainer}>
             <input
-              value={"תורנות שמירה"}
+              value={shift.shiftName}
               type="text"
               name="ShiftName"
               autoComplete="off"
@@ -25,7 +64,7 @@ const ShiftTradeCard = () => {
             ></input>
 
             <input
-              value={"29.1.2022"}
+              value={date}
               type="text"
               name="date"
               autoComplete="off"
@@ -34,7 +73,7 @@ const ShiftTradeCard = () => {
             ></input>
 
             <input
-              value={"ליעד אלטיף"}
+              value={shift.shiftPerson}
               type="text"
               name="CurrentPeron"
               autoComplete="off"
@@ -44,7 +83,7 @@ const ShiftTradeCard = () => {
 
             <div className={classes.hourCont}>
               <input
-                value={"17:30"}
+                value={shift.endTimeValue}
                 type="text"
                 name="shiftEndTime"
                 autoComplete="off"
@@ -55,7 +94,7 @@ const ShiftTradeCard = () => {
               <span>-</span>
 
               <input
-                value={"9:00"}
+                value={shift.startTimeValue}
                 type="text"
                 name="shiftStartTime"
                 autoComplete="off"
@@ -67,7 +106,7 @@ const ShiftTradeCard = () => {
             <div className={classes.buttonContainer}>
               <button
                 type="button"
-                // onClick={getShift}
+                onClick={getTradedShift}
                 className={classes.createShift}
               >
                 קח תורנות

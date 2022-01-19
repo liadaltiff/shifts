@@ -7,6 +7,7 @@ import { UserProvider } from "./contexts/UserContext";
 import { UsersProvider } from "./contexts/UsersContext";
 import { ShiftProvider } from "./contexts/ShiftContext";
 import { ShiftsProvider } from "./contexts/ShiftsContext";
+import { ShiftsTradeProvider } from "./contexts/ShiftsTradeContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,9 +15,11 @@ ReactDOM.render(
       <UserProvider>
         <UsersProvider>
           <ShiftProvider>
-            <ShiftsProvider>
-              <App />
-            </ShiftsProvider>
+            <ShiftsTradeProvider>
+              <ShiftsProvider>
+                <App />
+              </ShiftsProvider>
+            </ShiftsTradeProvider>
           </ShiftProvider>
         </UsersProvider>
       </UserProvider>
