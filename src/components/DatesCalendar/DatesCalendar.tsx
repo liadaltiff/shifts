@@ -13,6 +13,7 @@ import { ShiftContext } from "../../contexts/ShiftContext";
 import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import { ShiftsTradeContext } from "../../contexts/ShiftsTradeContext";
+import { getDay } from "date-fns";
 
 interface DatesCalendarProps {
   date: Date | undefined;
@@ -101,6 +102,8 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   });
 
   const modifiers = {
+    // disabled: (date: Date) =>
+    //   shiftDates.some((e: string) => date.toLocaleDateString("fr-FR") == e),
     taskDay: (date: Date) =>
       shiftDates.some((e: string) => date.toLocaleDateString("fr-FR") == e),
     bigFont: (date: Date) => true,
