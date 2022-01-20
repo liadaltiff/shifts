@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./make-shift.module.scss";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -12,11 +12,14 @@ interface shiftDates {
 const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
   const { form } = useMakeShift(shiftDate);
 
+  useEffect(() => {
+    console.log("form data", form.data);
+  }, [shiftDate]);
+
   return (
     <div className={classes.root}>
       <div className={classes.card}>
         <h1 className={classes.registerText}>תורנות</h1>
-
         <form>
           <div className={classes.inputContainer}>
             <label>תאריך התורנות</label>
@@ -46,15 +49,16 @@ const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
             ></TextField>
 
             <label>בחירת תורן</label>
+
+            {/* <span>{form.data.person?.fullName}</span> */}
             <Autocomplete
               value={form.data.person}
               disablePortal
-              id="combo-box-demo"
               options={form.users}
-              getOptionLabel={(option) => option.fullName}
+              getOptionLabel={(option) => option.fullName || ""}
               className={classes.inputStyle}
               onChange={(event, value) => {
-                form.setField("person", value ?? "");
+                form.setPersonField(value?._id ?? "");
               }}
               renderInput={(params) => <TextField {...params} />}
             />
@@ -66,7 +70,6 @@ const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
               id="time"
               type="time"
               value={form.data.time.start}
-              defaultValue="09:00"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -86,7 +89,6 @@ const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
               id="time"
               type="time"
               value={form.data.time.end}
-              defaultValue="12:00"
               InputLabelProps={{
                 shrink: true,
               }}

@@ -9,7 +9,7 @@ import "sweetalert2/src/sweetalert2.scss";
 
 interface ShiftDetails {
   name: string;
-  person: User | undefined;
+  person: User;
   time: {
     start: string;
     end: string;
@@ -18,10 +18,11 @@ interface ShiftDetails {
 
 export const useMakeShift = (date: Date | undefined) => {
   const { stateShift, setStateShift } = useContext(ShiftContext);
+  const { stateUsers } = useContext(UsersContext);
 
   const defaultDetails: ShiftDetails = {
     name: "",
-    person: undefined,
+    person: {} as User,
     time: {
       start: "",
       end: "",
@@ -51,6 +52,11 @@ export const useMakeShift = (date: Date | undefined) => {
     });
   };
 
+  const handlePersonChange = (id: string) => {
+    const person = stateUsers.find((user) => user._id === id);
+    handleChange("person", person);
+  };
+
   const parseDetails = () => {
     return {
       shiftDate: date,
@@ -61,8 +67,6 @@ export const useMakeShift = (date: Date | undefined) => {
       endTimeValue: details.time.end,
     };
   };
-
-  const { stateUsers, setStateUsers } = useContext(UsersContext);
 
   const createShift = useCallback(() => {
     const sendRequest = async () => {
@@ -98,7 +102,7 @@ export const useMakeShift = (date: Date | undefined) => {
 
       setDetails({
         name: stateShift.shiftName,
-        person: undefined,
+        person: userINeed!,
         time: {
           start: stateShift.startTimeValue,
           end: stateShift.endTimeValue,
@@ -119,6 +123,7 @@ export const useMakeShift = (date: Date | undefined) => {
       data: details,
       setField: handleChange,
       setTimeField: handleTimeChange,
+      setPersonField: handlePersonChange,
       post: createShift,
       users: stateUsers,
     },
