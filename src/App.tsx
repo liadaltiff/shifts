@@ -9,6 +9,9 @@ import { UserContext } from "./contexts/UserContext";
 import { getUser } from "./api/users";
 import TradeShifts from "./pages/TradeShifts/TradeShifts";
 
+// import io from "socket.io-client";
+// const socket = io("http://localhost:3001");
+
 export default function App() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   useEffect(() => {

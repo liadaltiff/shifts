@@ -9,6 +9,9 @@ import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 
+import io from "socket.io-client";
+const socket = io("http://localhost:3001");
+
 interface shiftDates {
   shiftDate: Date | undefined;
 }
@@ -26,6 +29,15 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
   useEffect(() => {
     setStateShift(undefined);
   }, []);
+
+  socket.on("new-notification", () => {
+    Swal.fire({
+      position: "top-end",
+      title: "תורנות עלתה לעמוד ההחלפות",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  });
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   if (loggedInUser) {
