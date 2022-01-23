@@ -14,10 +14,6 @@ interface shiftDates {
   shiftDate: Date | undefined;
 }
 
-const ErrorText = () => {
-  return <></>;
-};
-
 const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
   const { stateShift, setStateShift } = useContext(ShiftContext);
 
@@ -129,8 +125,6 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
             </div>
           </div>
         </form>
-
-        {isError && <ErrorText />}
       </div>
     </div>
   );
