@@ -25,8 +25,6 @@ const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
   const date = new Date(shift.shiftDate).toLocaleDateString("he-IL");
 
   const getTradedShift = useCallback(() => {
-    console.log("got here");
-
     const sendRequest = async () => {
       try {
         const response = await axios.put(
@@ -35,6 +33,9 @@ const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
             traded: false,
             shiftPerson: loggedInUser?.fullName,
             shiftPersonId: loggedInUser?._id,
+          },
+          {
+            withCredentials: true,
           }
         );
         Swal.fire({

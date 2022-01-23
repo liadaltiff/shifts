@@ -44,16 +44,16 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
     setLoggedInUser(loggedInUser);
   }
   const getDate = shiftDate?.toISOString();
-  // console.log("the date is", getDate);
 
   const tradeCurrentShift = useCallback(() => {
-    console.log("got here");
-
     const sendRequest = async () => {
       try {
         const response = await axios.patch(
           `http://localhost:5000/shifts/date/${getDate}/trade`,
-          { traded: true }
+          { traded: true },
+          {
+            withCredentials: true,
+          }
         );
         Swal.fire({
           icon: "success",

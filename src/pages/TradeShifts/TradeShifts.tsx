@@ -23,7 +23,6 @@ const TradeShifts = () => {
     setLoggedInUser(loggedInUser);
   }
 
-  // console.log("dateinput:", inputProps.value);
   const { stateTradeShifts, setStateTradeShifts } =
     useContext(ShiftsTradeContext);
   const { stateShift, setStateShift } = useContext(ShiftContext);
@@ -36,7 +35,10 @@ const TradeShifts = () => {
       if (loggedInUser) {
         try {
           const resTradeShifts = await axios.get(
-            "http://localhost:5000/shifts/"
+            "http://localhost:5000/shifts/",
+            {
+              withCredentials: true,
+            }
           );
 
           setStateTradeShifts(resTradeShifts.data);
@@ -49,8 +51,6 @@ const TradeShifts = () => {
     };
     getTradedShifts();
   }, [tradedShifts]);
-
-  console.log("trades shifts are", tradedShifts); //run this log!
 
   const shifts = tradedShifts.map((shift) => (
     <ShiftTradeCard shift={shift} key={shift._id} />

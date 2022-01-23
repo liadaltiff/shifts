@@ -13,7 +13,6 @@ import { ShiftContext } from "../../contexts/ShiftContext";
 import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import { ShiftsTradeContext } from "../../contexts/ShiftsTradeContext";
-import { getDay } from "date-fns";
 
 interface DatesCalendarProps {
   date: Date | undefined;
@@ -45,19 +44,24 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     const getShifts = async () => {
       if (loggedInUser) {
         try {
-          const resShifts = await axios.get(`http://localhost:5000/shifts`);
+          const resShifts = await axios.get(`http://localhost:5000/shifts`, {
+            withCredentials: true,
+          });
           setStateTradeShifts(resShifts.data);
 
           if (loggedInUser.role === "Officer") {
-            console.log("got here");
-
-            const resShifts = await axios.get(`http://localhost:5000/shifts`);
+            const resShifts = await axios.get(`http://localhost:5000/shifts`, {
+              withCredentials: true,
+            });
             setStateShifts(resShifts.data);
           }
 
           if (loggedInUser.role === "Soldier") {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/shiftperson/${userId}`
+              `http://localhost:5000/shifts/shiftperson/${userId}`,
+              {
+                withCredentials: true,
+              }
             );
             setStateShifts(resShifts.data);
           }
@@ -71,7 +75,6 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   }, []);
 
   const shiftDates: string[] = [];
-  // console.log("stateshifts:", stateShifts);
 
   stateShifts.map((shift) => {
     const shiftDate = new Date(shift.shiftDate);
@@ -82,7 +85,10 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   const getCurrentShift = async (date: Date): Promise<Shift | undefined> => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/shifts/date/${date.toISOString()}`
+        `http://localhost:5000/shifts/date/${date.toISOString()}`,
+        {
+          withCredentials: true,
+        }
       );
 
       if (responseOk(response)) {

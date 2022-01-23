@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import classes from "./make-shift.module.scss";
 import TextField from "@mui/material/TextField";
@@ -12,9 +11,7 @@ interface shiftDates {
 const MakeShift: React.VFC<shiftDates> = ({ shiftDate }) => {
   const { form } = useMakeShift(shiftDate);
 
-  useEffect(() => {
-    console.log("form data", form.data);
-  }, [shiftDate]);
+  useEffect(() => {}, [shiftDate]);
 
   return (
     <div className={classes.root}>

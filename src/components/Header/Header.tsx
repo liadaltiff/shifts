@@ -7,7 +7,6 @@ import { UserContext } from "../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, TextField } from "@mui/material";
-import { User } from "../../types/user.interface";
 import { ShiftsContext } from "../../contexts/ShiftsContext";
 import { UsersContext } from "../../contexts/UsersContext";
 import axios from "axios";
@@ -77,13 +76,18 @@ const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
         try {
           if (userINeed !== undefined) {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/shiftperson/${userId}`
+              `http://localhost:5000/shifts/shiftperson/${userId}`,
+              {
+                withCredentials: true,
+              }
             );
             setStateShifts(resShifts.data);
           }
 
           if (userINeed === undefined && loggedInUser.role === "Officer") {
-            const resShifts = await axios.get(`http://localhost:5000/shifts`);
+            const resShifts = await axios.get(`http://localhost:5000/shifts`, {
+              withCredentials: true,
+            });
             setStateShifts(resShifts.data);
           }
         } catch (error) {

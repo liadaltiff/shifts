@@ -19,11 +19,17 @@ const RegisterPage: FC = () => {
   const CreateUser = useCallback(() => {
     const sendrequest = async () => {
       try {
-        const response = await axios.post("http://localhost:5000/users", {
-          fullName,
-          _id,
-          password,
-        });
+        const response = await axios.post(
+          "http://localhost:5000/auth/register",
+          {
+            fullName,
+            _id,
+            password,
+          },
+          {
+            withCredentials: true,
+          }
+        );
 
         if (response.status >= 200 && response.status <= 399) {
           navigate(`/login`);
