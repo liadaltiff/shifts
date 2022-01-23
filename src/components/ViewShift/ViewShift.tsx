@@ -8,7 +8,7 @@ import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 
 import io from "socket.io-client";
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:4000");
 
 interface shiftDates {
   shiftDate: Date | undefined;

@@ -1,12 +1,12 @@
 import React, { createContext, useState } from "react";
 import { Shift } from "../types/shift.interface";
 
-interface UserContextProps {
+interface ShiftContextProps {
   stateShift: Shift | undefined;
   setStateShift: (shift: Shift | undefined) => void;
 }
 
-export const ShiftContext = createContext<UserContextProps>({
+export const ShiftContext = createContext<ShiftContextProps>({
   stateShift: undefined,
   setStateShift: () => {},
 });
