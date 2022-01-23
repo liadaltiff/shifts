@@ -2,7 +2,6 @@ import classes from "./dates-calendar.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { he } from "date-fns/locale";
-// import {fr} from "date-fns"
 import { DatePickerCalendar, useDateInput } from "react-nice-dates";
 import { ShiftsContext } from "../../contexts/ShiftsContext";
 import "react-nice-dates/build/style.css";

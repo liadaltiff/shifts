@@ -1,11 +1,9 @@
 import axios from "axios";
-import getDate from "date-fns/getDate";
 import { FC, useState, useCallback, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { UserContext } from "../../contexts/UserContext";
-import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 

@@ -3,13 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import "react-nice-dates/build/style.css";
 import Header from "../../components/Header/Header";
-import DatesCalendar from "../../components/DatesCalendar/DatesCalendar";
 import "react-nice-dates/build/style.css";
 import ShiftTradeCard from "../../components/ShiftTradeCard/ShiftTradeCard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShiftContext } from "../../contexts/ShiftContext";
-import { ShiftsContext } from "../../contexts/ShiftsContext";
 import { Shift } from "../../types/shift.interface";
 import { ShiftsTradeContext } from "../../contexts/ShiftsTradeContext";
 

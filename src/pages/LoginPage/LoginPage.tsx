@@ -4,8 +4,7 @@ import classes from "./login-page.module.scss";
 import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 import { UsersContext } from "../../contexts/UsersContext";
-import { ShiftsContext, ShiftsProvider } from "../../contexts/ShiftsContext";
-import { Shift } from "../../types/shift.interface";
+import { ShiftsContext } from "../../contexts/ShiftsContext";
 
 const ErrorText = () => {
   return (
@@ -16,9 +15,7 @@ const ErrorText = () => {
 const LoginPage: FC = () => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const { stateUsers, setStateUsers } = useContext(UsersContext);
-
   const { stateShifts, setStateShifts } = useContext(ShiftsContext);
-
   const { state } = useLocation();
 
   const [_id, setId] = useState("");

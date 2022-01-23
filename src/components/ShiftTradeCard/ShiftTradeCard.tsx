@@ -1,6 +1,5 @@
 import axios from "axios";
-import { FC, useState, useCallback, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, useState, useCallback, useContext } from "react";
 import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { ShiftsContext } from "../../contexts/ShiftsContext";
