@@ -7,9 +7,21 @@ import { UserContext } from "../../contexts/UserContext";
 import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
+import io from "socket.io-client";
+import { uuid } from "uuidv4";
 
-// import io from "socket.io-client";
-// const socket = io("http://localhost:4000");
+interface Message {
+  id: string;
+  name: string;
+  text: string;
+}
+
+interface Payload {
+  name: string;
+  text: string;
+}
+
+const socket = io("http://localhost:3333");
 
 interface shiftDates {
   shiftDate: Date | undefined;
@@ -25,14 +37,14 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
     setStateShift(undefined);
   }, []);
 
-  // socket.on("new-notification", () => {
-  //   Swal.fire({
-  //     position: "top-end",
-  //     title: "תורנות עלתה לעמוד ההחלפות",
-  //     showConfirmButton: false,
-  //     timer: 1500,
-  //   });
-  // });
+  socket.on("messageToClient", (message: Payload) => {
+    Swal.fire({
+      position: "top-end",
+      title: "תורנות עלתה לעמוד ההחלפות",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  });
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   if (loggedInUser) {
@@ -57,6 +69,8 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
           //   withCredentials: true,
           // }
         );
+        socket.emit("messageToServer");
+
         Swal.fire({
           icon: "success",
           title: "התורנות נשלחה לעמוד ההחלפות בהצלחה",

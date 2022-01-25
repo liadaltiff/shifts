@@ -26,7 +26,8 @@
     "sass": "^1.47.0",
     "socket.io-client": "^4.4.1",
     "sweetalert2": "^11.3.6",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",
