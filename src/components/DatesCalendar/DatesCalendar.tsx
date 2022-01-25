@@ -43,23 +43,29 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
     const getShifts = async () => {
       if (loggedInUser) {
         try {
-          const resShifts = await axios.get(`http://localhost:5000/shifts`, {
-            withCredentials: true,
-          });
+          const resShifts = await axios.get(
+            `http://localhost:5000/shifts/getShifts`,
+            {
+              // withCredentials: true,
+            }
+          );
           setStateTradeShifts(resShifts.data);
 
           if (loggedInUser.role === "Officer") {
-            const resShifts = await axios.get(`http://localhost:5000/shifts`, {
-              withCredentials: true,
-            });
+            const resShifts = await axios.get(
+              `http://localhost:5000/shifts/getShifts`,
+              {
+                // withCredentials: true,
+              }
+            );
             setStateShifts(resShifts.data);
           }
 
           if (loggedInUser.role === "Soldier") {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/shiftperson/${userId}`,
+              `http://localhost:5000/shifts/getShiftsByPersonId/${userId}`,
               {
-                withCredentials: true,
+                // withCredentials: true,
               }
             );
             setStateShifts(resShifts.data);
@@ -84,10 +90,10 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   const getCurrentShift = async (date: Date): Promise<Shift | undefined> => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/shifts/date/${date.toISOString()}`,
-        {
-          withCredentials: true,
-        }
+        `http://localhost:5000/shifts/getShiftByDate/${date.toISOString()}`
+        // {
+        //   withCredentials: true,
+        // }
       );
 
       if (responseOk(response)) {

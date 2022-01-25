@@ -71,12 +71,13 @@ export const useMakeShift = (date: Date | undefined) => {
   const createShift = useCallback(() => {
     const sendRequest = async () => {
       try {
+        let trade = false;
         const response = await axios.post(
-          "http://localhost:5000/shifts",
-          parseDetails(),
-          {
-            withCredentials: true,
-          }
+          "http://localhost:5000/shifts/createShift",
+          { parseDetails: parseDetails(), trade }
+          // {
+          //   withCredentials: true,
+          // }
         );
 
         Swal.fire({

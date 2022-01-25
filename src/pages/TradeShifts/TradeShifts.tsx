@@ -33,10 +33,10 @@ const TradeShifts = () => {
       if (loggedInUser) {
         try {
           const resTradeShifts = await axios.get(
-            "http://localhost:5000/shifts/",
-            {
-              withCredentials: true,
-            }
+            "http://localhost:5000/shifts/getShifts"
+            // {
+            //   withCredentials: true,
+            // }
           );
 
           setStateTradeShifts(resTradeShifts.data);

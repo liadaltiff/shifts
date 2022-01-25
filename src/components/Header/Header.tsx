@@ -76,18 +76,21 @@ const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
         try {
           if (userINeed !== undefined) {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/shiftperson/${userId}`,
-              {
-                withCredentials: true,
-              }
+              `http://localhost:5000/shifts/getShiftsByPersonId/${userId}`
+              // {
+              //   withCredentials: true,
+              // }
             );
             setStateShifts(resShifts.data);
           }
 
           if (userINeed === undefined && loggedInUser.role === "Officer") {
-            const resShifts = await axios.get(`http://localhost:5000/shifts`, {
-              withCredentials: true,
-            });
+            const resShifts = await axios.get(
+              `http://localhost:5000/shifts/getShifts`,
+              {
+                // withCredentials: true,
+              }
+            );
             setStateShifts(resShifts.data);
           }
         } catch (error) {

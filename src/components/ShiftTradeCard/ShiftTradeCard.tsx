@@ -27,15 +27,15 @@ const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
     const sendRequest = async () => {
       try {
         const response = await axios.put(
-          `http://localhost:5000/shifts/date/${shift.shiftDate}/traded`,
+          `http://localhost:5000/shifts/getTradedShift/${shift._id}`,
           {
             traded: false,
             shiftPerson: loggedInUser?.fullName,
             shiftPersonId: loggedInUser?._id,
-          },
-          {
-            withCredentials: true,
           }
+          // {
+          //   withCredentials: true,
+          // }
         );
         Swal.fire({
           icon: "success",

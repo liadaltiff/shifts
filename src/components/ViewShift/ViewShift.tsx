@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ShiftContext } from "../../contexts/ShiftContext";
 import { UserContext } from "../../contexts/UserContext";
+import { Shift } from "../../types/shift.interface";
 import { responseOk } from "../../utils/axios.util";
 import classes from "./view-shift.module.scss";
 
-import io from "socket.io-client";
-const socket = io("http://localhost:4000");
+// import io from "socket.io-client";
+// const socket = io("http://localhost:4000");
 
 interface shiftDates {
   shiftDate: Date | undefined;
@@ -24,30 +25,37 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
     setStateShift(undefined);
   }, []);
 
-  socket.on("new-notification", () => {
-    Swal.fire({
-      position: "top-end",
-      title: "תורנות עלתה לעמוד ההחלפות",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  });
+  // socket.on("new-notification", () => {
+  //   Swal.fire({
+  //     position: "top-end",
+  //     title: "תורנות עלתה לעמוד ההחלפות",
+  //     showConfirmButton: false,
+  //     timer: 1500,
+  //   });
+  // });
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   if (loggedInUser) {
     setLoggedInUser(loggedInUser);
   }
   const getDate = shiftDate?.toISOString();
+  // console.log("shiftid is", shiftId);
+  useEffect(() => {
+    console.log(stateShift);
+  }, [stateShift]);
 
   const tradeCurrentShift = useCallback(() => {
     const sendRequest = async () => {
       try {
+        const shiftId = stateShift?._id;
+        console.log("liad", shiftId);
+
         const response = await axios.patch(
-          `http://localhost:5000/shifts/date/${getDate}/trade`,
-          { traded: true },
-          {
-            withCredentials: true,
-          }
+          `http://localhost:5000/shifts/offerShift/${shiftId}`
+          // { traded: true }
+          // {
+          //   withCredentials: true,
+          // }
         );
         Swal.fire({
           icon: "success",
@@ -65,7 +73,7 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
     };
 
     sendRequest();
-  }, [getDate]);
+  }, [stateShift]);
 
   return (
     <div className={classes.root}>

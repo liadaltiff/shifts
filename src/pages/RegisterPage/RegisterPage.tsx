@@ -16,19 +16,22 @@ const RegisterPage: FC = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
+  //"http://localhost:5000/auth/register"
   const CreateUser = useCallback(() => {
     const sendrequest = async () => {
       try {
+        let role = "Soldier";
         const response = await axios.post(
-          "http://localhost:5000/auth/register",
+          "http://localhost:5000/users/createUser",
           {
             fullName,
             _id,
+            role,
             password,
-          },
-          {
-            withCredentials: true,
           }
+          // {
+          //   withCredentials: true,
+          // }
         );
 
         if (response.status >= 200 && response.status <= 399) {

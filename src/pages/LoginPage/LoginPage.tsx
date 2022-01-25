@@ -26,21 +26,23 @@ const LoginPage: FC = () => {
 
   const Login = async (event: any) => {
     event.preventDefault();
+    //        "http://localhost:5000/auth/login",
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        "http://localhost:5000/users/login",
         {
           _id,
           password,
-        },
-        {
-          withCredentials: true,
         }
+        // {
+        //   withCredentials: true,
+        // }
       );
 
-      if (response.statusText === "OK") {
-        const res = await axios.get(`http://localhost:5000/users`, {
+      if (response.status >= 200 && response.status <= 399) {
+        console.log("aaaa");
+        const res = await axios.get(`http://localhost:5000/users/getUsers`, {
           withCredentials: true,
         });
         setStateUsers(res.data);
