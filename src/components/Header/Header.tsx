@@ -9,6 +9,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Autocomplete, TextField } from "@mui/material";
 import { ShiftsContext } from "../../contexts/ShiftsContext";
 import { UsersContext } from "../../contexts/UsersContext";
+import { CookiesProvider } from "react-cookie";
 import axios from "axios";
 
 interface shiftDates {
@@ -63,6 +64,8 @@ const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
 
   const LogOut = () => {
     setLoggedInUser(undefined);
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
     navigate("/login");
   };
 
@@ -76,10 +79,10 @@ const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
         try {
           if (userINeed !== undefined) {
             const resShifts = await axios.get(
-              `http://localhost:5000/shifts/getShiftsByPersonId/${userId}`
-              // {
-              //   withCredentials: true,
-              // }
+              `http://localhost:5000/shifts/getShiftsByPersonId/${userId}`,
+              {
+                withCredentials: true,
+              }
             );
             setStateShifts(resShifts.data);
           }
@@ -88,7 +91,7 @@ const Header: React.VFC<shiftDates> = ({ shiftDate }) => {
             const resShifts = await axios.get(
               `http://localhost:5000/shifts/getShifts`,
               {
-                // withCredentials: true,
+                withCredentials: true,
               }
             );
             setStateShifts(resShifts.data);

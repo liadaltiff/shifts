@@ -49,11 +49,11 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
       try {
         const shiftId = stateShift?._id;
         const response = await axios.patch(
-          `http://localhost:5000/shifts/offerShift/${shiftId}`
+          `http://localhost:5000/shifts/offerShift/${shiftId}`,
           // { traded: true }
-          // {
-          //   withCredentials: true,
-          // }
+          {
+            withCredentials: true,
+          }
         );
 
         Swal.fire({

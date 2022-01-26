@@ -74,10 +74,10 @@ export const useMakeShift = (date: Date | undefined) => {
         let trade = false;
         const response = await axios.post(
           "http://localhost:5000/shifts/createShift",
-          { parseDetails: parseDetails(), trade }
-          // {
-          //   withCredentials: true,
-          // }
+          { parseDetails: parseDetails(), trade },
+          {
+            withCredentials: true,
+          }
         );
 
         Swal.fire({

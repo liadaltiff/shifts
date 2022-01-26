@@ -32,10 +32,10 @@ const ShiftTradeCard: FC<TradedShiftsProps> = ({ shift }) => {
             traded: false,
             shiftPerson: loggedInUser?.fullName,
             shiftPersonId: loggedInUser?._id,
+          },
+          {
+            withCredentials: true,
           }
-          // {
-          //   withCredentials: true,
-          // }
         );
         Swal.fire({
           icon: "success",

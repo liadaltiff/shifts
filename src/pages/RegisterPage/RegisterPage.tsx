@@ -28,10 +28,10 @@ const RegisterPage: FC = () => {
             _id,
             role,
             password,
+          },
+          {
+            withCredentials: true,
           }
-          // {
-          //   withCredentials: true,
-          // }
         );
 
         if (response.status >= 200 && response.status <= 399) {

@@ -46,7 +46,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
           const resShifts = await axios.get(
             `http://localhost:5000/shifts/getShifts`,
             {
-              // withCredentials: true,
+              withCredentials: true,
             }
           );
           setStateTradeShifts(resShifts.data);
@@ -55,7 +55,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
             const resShifts = await axios.get(
               `http://localhost:5000/shifts/getShifts`,
               {
-                // withCredentials: true,
+                withCredentials: true,
               }
             );
             setStateShifts(resShifts.data);
@@ -65,7 +65,7 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
             const resShifts = await axios.get(
               `http://localhost:5000/shifts/getShiftsByPersonId/${userId}`,
               {
-                // withCredentials: true,
+                withCredentials: true,
               }
             );
             setStateShifts(resShifts.data);
@@ -90,10 +90,10 @@ const DatesCalendar: React.FC<DatesCalendarProps> = ({
   const getCurrentShift = async (date: Date): Promise<Shift | undefined> => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/shifts/getShiftByDate/${date.toISOString()}`
-        // {
-        //   withCredentials: true,
-        // }
+        `http://localhost:5000/shifts/getShiftByDate/${date.toISOString()}`,
+        {
+          withCredentials: true,
+        }
       );
 
       if (responseOk(response)) {

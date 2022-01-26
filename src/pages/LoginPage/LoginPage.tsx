@@ -34,14 +34,13 @@ const LoginPage: FC = () => {
         {
           _id,
           password,
+        },
+        {
+          withCredentials: true,
         }
-        // {
-        //   withCredentials: true,
-        // }
       );
 
       if (response.status >= 200 && response.status <= 399) {
-        console.log("aaaa");
         const res = await axios.get(`http://localhost:5000/users/getUsers`, {
           withCredentials: true,
         });
