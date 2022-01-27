@@ -47,10 +47,12 @@ const ViewShift: FC<shiftDates> = ({ shiftDate }) => {
   const tradeCurrentShift = useCallback(() => {
     const sendRequest = async () => {
       try {
+        console.log("sex achi");
+
         const shiftId = stateShift?._id;
         const response = await axios.patch(
           `http://localhost:5000/shifts/offerShift/${shiftId}`,
-          // { traded: true }
+          {},
           {
             withCredentials: true,
           }
