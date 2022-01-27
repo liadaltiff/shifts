@@ -26,8 +26,6 @@ const LoginPage: FC = () => {
 
   const Login = async (event: any) => {
     event.preventDefault();
-    //        "http://localhost:5000/auth/login",
-
     try {
       const response = await axios.post(
         "http://localhost:5000/users/login",
